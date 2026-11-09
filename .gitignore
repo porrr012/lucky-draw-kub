@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+Icon?
+
+# Tooling (Babel is installed outside this folder, but ignore it if you ever install it here)
+node_modules/

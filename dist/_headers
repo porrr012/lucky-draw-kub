@@ -1,0 +1,13 @@
+# Netlify headers. The icon is cached for a year, so if you replace it, give the new file a new name
+# (for example apple-touch-icon-v3.png) and update the link in src/template.html.
+/apple-touch-icon-v2.png
+  Cache-Control: public, max-age=31536000, immutable
+
+# index.html is revalidated on every visit so a new deploy shows up straight away.
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Basic hardening for every file.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
