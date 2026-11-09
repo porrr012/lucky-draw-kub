@@ -11,7 +11,7 @@ const here = __dirname;
 const out = process.argv[2] || path.join(here, '..', 'dist', 'index.html');
 const css = fs.readFileSync(path.join(here, 'styles.css'), 'utf8');
 const src = fs.readFileSync(path.join(here, 'app.jsx'), 'utf8');
-const js = babel.transformSync(src, { presets: [[process.env.PRESET_DIR || '@babel/preset-react', { runtime: 'classic' }]], compact: true, comments: false }).code;
+const js = babel.transformSync(src, { presets: [[process.env.PRESET_DIR || '@babel/preset-react', { runtime: 'classic' }]], compact: false, comments: true }).code;
 const html = fs.readFileSync(path.join(here, 'template.html'), 'utf8')
   .replace('/*__CSS__*/', () => css).replace('/*__JS__*/', () => js.replace(/<\/script/gi, '<\\/script'));
 fs.writeFileSync(out, html);

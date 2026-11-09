@@ -105,7 +105,7 @@ h2.title{font-weight:700;font-size:var(--t-xl);line-height:1.15;margin:0 0 var(-
 /* people list */
 .list-head{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;justify-content:space-between;margin-bottom:var(--s2)}
 .list-head h3{margin:0;font-size:var(--t-lg);font-weight:700;letter-spacing:-.01em}
-.row-actions{display:flex;gap:var(--s2)}
+.row-actions{display:flex;flex-wrap:wrap;gap:var(--s2)}
 .people{display:flex;flex-direction:column;margin:0;padding:0;list-style:none}
 .person{position:relative;display:flex;align-items:center;gap:var(--s3);padding:var(--s2) var(--s1);min-height:60px;border-bottom:1px solid var(--line)}
 .person:last-child{border-bottom:0}

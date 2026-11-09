@@ -310,6 +310,11 @@ const SetupView = (p) => {
                             <button className="btn btn-quiet btn-sm" onClick={p.clearList} disabled={linkingMode}>
                                 <Ico n="trash" size={18} /> Clear
                             </button>
+                            {!linkingMode && participants.some((x) => x.partnerId) && (
+                                <button className="btn btn-quiet btn-sm" onClick={p.askUnlinkAll}>
+                                    <Ico n="heartOff" size={18} /> Unlink all
+                                </button>
+                            )}
                             <button className={'btn btn-quiet btn-sm' + (linkingMode ? ' on' : '')} onClick={() => { p.setLinkingMode(!linkingMode); p.setSelectedForLink(null); }}>
                                 <Ico n="heart" size={18} fill={linkingMode ? 'currentColor' : 'none'} /> {linkingMode ? 'Done' : 'Link couples'}
                             </button>
@@ -406,7 +411,7 @@ const App = () => {
     const [linkingMode, setLinkingMode] = useState(false);
     const [selectedForLink, setSelectedForLink] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [confirm, setConfirm] = useState(null); // 'restart' | 'clear' | null
+    const [confirm, setConfirm] = useState(null); // 'restart' | 'clear' | 'unlink-all' | null
     const [logOpen, setLogOpen] = useState(false);
 
     const inGame = view !== 'setup';
@@ -502,6 +507,13 @@ const App = () => {
         setSelectedForLink(null);
     };
 
+    // Clears every partner link at once. Names and ids stay; only partnerId is reset,
+    // so both sides of a couple can never end up out of sync.
+    const unlinkAll = () => {
+        setParticipants((prev) => prev.map((x) => ({ ...x, partnerId: null })));
+        setSelectedForLink(null); setConfirm(null);
+    };
+
     const unlinkPartner = (id) => {
         setParticipants((prev) => prev.map((x) => (x.id === id || x.partnerId === id ? { ...x, partnerId: null } : x)));
     };
@@ -584,7 +596,7 @@ const App = () => {
                         selectedForLink={selectedForLink} setSelectedForLink={setSelectedForLink} handleLinkClick={handleLinkClick}
                         editingId={editingId} editNameVal={editNameVal} setEditNameVal={setEditNameVal} setEditingId={setEditingId}
                         updateName={updateName} unlinkPartner={unlinkPartner} removeParticipant={removeParticipant}
-                        generateMatches={generateMatches} clearList={clearList} />
+                        generateMatches={generateMatches} clearList={clearList} askUnlinkAll={() => setConfirm('unlink-all')} />
                 )}
 
                 {inGame && (
@@ -663,6 +675,10 @@ const App = () => {
             {confirm === 'restart' && (
                 <ConfirmModal title="Restart the game?" text="The draw and all opened gifts will be cleared. Your list of friends stays."
                     confirmLabel="Restart" onCancel={() => setConfirm(null)} onConfirm={resetGame} />
+            )}
+            {confirm === 'unlink-all' && (
+                <ConfirmModal title="Unlink all couples?" text="Everyone stays in the list. Only the couple links are removed."
+                    confirmLabel="Unlink all" onCancel={() => setConfirm(null)} onConfirm={unlinkAll} />
             )}
             {confirm === 'clear' && (
                 <ConfirmModal title="Clear the list?" text="Everyone will be removed from the list."
