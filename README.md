@@ -2,8 +2,6 @@
 
 A minimal, mobile-first gift swap (Secret Santa) for a group in one room. One phone gets passed around, and each person privately opens their own gift to see who their gift is from. English interface with Thai hints, and Thai names work too.
 
-**Live site:** https://lucky-draw-kub.netlify.app
-
 ## How it works
 
 1. **Add friends.** Type names one at a time, or paste a whole list (one per line, or separated by commas). At least 3 people are needed.
